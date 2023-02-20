@@ -97,8 +97,8 @@ This project provides an API to help Bukkit/Spigot developers use the Minecraft 
 Still not convinced? In addition to all of the above, the CommandAPI also provides:
 
 - **Built-in command converter** - Convert other plugin commands into `/execute`-compatible ones - no code required!
-- **Compile-time annotation framework** - Don't like writing lots of code with builders? You don't have to!
 - **Tree-structure command registration** - Like Brigadier's code format? We've got you covered with `CommandTree`
+- **Kotlin DSL** - Prefer writing plugins in Kotlin? The CommandAPI has an optional Kotlin DSL just for you
 - **Powerful suggestion generation** - Generate new suggestions for each argument, or add to existing suggestions
 - **Safe suggestion generation** - The CommandAPI offers compile-time type safety for specific arguments
 - **Precise permission support** - Apply permissions to specific arguments - you need perms to even _see_ the argument
@@ -369,6 +369,75 @@ This is the current roadmap for the CommandAPI (as of 2nd November 2022):
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td valign="top"><b>9.0.0</b></td>
+            <td valign="top">??? 2023</td>
+            <td valign="top">
+                <b>⚠️ This version is incompatible with any plugin that used the CommandAPI version 8.7.x or below! (See documentation for more information)</b><br>
+                <b>New features:</b>
+                <ul>
+                    <li>https://github.com/JorelAli/CommandAPI/issues/360, https://github.com/JorelAli/CommandAPI/pull/369 Made executor methods now use <code>CommandArguments</code> to allow for accessing arguments by name instead of index</li>
+                    <li>https://github.com/JorelAli/CommandAPI/issues/162, https://github.com/JorelAli/CommandAPI/issues/387, https://github.com/JorelAli/CommandAPI/pull/393 Added optional arguments</li>
+                    <li>https://github.com/JorelAli/CommandAPI/pull/388 Added new <code>hook-paper-reload</code> config option to toggle whether the CommandAPI hooks into <code>/minecraft:reload</code></li>
+                    <li>Reworked the implementation of <code>ItemArgument</code>, so the <code>ItemStack</code> count is correctly reflected and <code>ItemMeta</code> is properly assigned</li>
+                    <li>Made the <code>TeamArgument</code> return a <code>Team</code> instead of a String</li>
+                    <li>Made the <code>ObjectiveArgument</code> return a <code>Objective</code> instead of a String</li>
+                    <li>https://github.com/JorelAli/CommandAPI/pull/391 Made the CommandAPI only complain about commands registered in a <code>plugin.yml</code> if this <code>plugin.yml</code> belongs to the plugin calling the CommandAPI</li>
+                </ul>
+                <b>Kotlin DSL changes:</b>
+                <ul>
+                    <li>Implemented resulting executors</li>
+                    <li>Implemented the <code>FunctionArgument</code></li>
+                    <li>Several improvements for the <code>CommandAPICommand</code> DSL</li>
+                </ul>
+                <b>Bug fixes:</b>
+                <ul>
+                    <li>Fixed <code>commandapi-preprocessor</code> appearing in the plugin and shaded jar file</li>
+                    <li>https://github.com/JorelAli/CommandAPI/issues/390 Fixed <code>.executesNative()</code>'s CommandSender's <code>getLocation()</code> method returning the wrong pitch and yaw</li>
+                    <li>Fixed tags showing up in the <code>BiomeArgument</code> when they shouldn't have been doing so</li>
+                    <li>Fixed <code>LocationArgument</code> with <code>BLOCK_POSITION</code> not returning locations in unloaded chunks</li>
+                </ul>
+                <b>Testing and validation:</b>
+                <ul>
+                    <li>Created the testing matrix to perform multi-Minecraft-version testing</li>
+                    <b>Bugs found (and fixed) as a result of the testing matrix:</b>
+                    <ul>
+                        <li>Fixed <code>IntegerRangeArgument</code> and <code>FloatRangeArgument</code> not working on Minecraft 1.16.4 and 1.16.5</li>
+                        <li>Fixed <code>RecipeArgument</code> not working on Minecraft 1.17</li>
+                        <li>Fixed <code>TeamArgument</code> not working on Minecraft 1.17</li>
+                        <li>Fixed commands with no executors not being caught by the CommandAPI</li>
+                    </ul>
+                    <li>Integrated the CommandAPI repository with SonarCloud to identify bugs and improve the internal code</li>
+                    <b>Bugs found (and fixed) as a result of using SonarCloud:</b>
+                    <ul>
+                        <li>Fixed the <code>FunctionArgument</code> not correctly retrieving datapack (function) tags in 1.17+</li>
+                    </ul>
+                </ul>
+                <b>Documentation changes:</b>
+                <ul>
+                    <li>https://github.com/JorelAli/CommandAPI/issues/384 Fixed various particle data not being documented for the <code>ParticleArgument</code> documentation page</li>
+                    <li>Fixed broken links in the documentation (using <a href="https://github.com/Michael-F-Bryan/mdbook-linkcheck">Michael-F-Bryan/mdbook-linkcheck</a>)</li>
+                    <li>Refactored documentation argument page names for consistency</li>
+                    <li>Added Kotlin DSL examples</li>
+                </ul>
+                <b>Other changes:</b>
+                <ul>
+                    <li>Removed all previously deprecated constructors, classes and methods</li>
+                    <li>Completely refactored the entire CommandAPI project to help support other platforms</li>
+                    <li>Added a live dev build of the documentation at <a href="https://commandapi-live-docs.jorel.dev/">commandapi-live-docs.jorel.dev</a></li>
+                    <li>Improved mobile support for the CommandAPI home page</li>
+                    <li>Added the CommandAPI's Modrinth link to the CommandAPI home page</li>
+                    <li>Dropped support for Minecraft 1.13 - 1.14.4. Please use an older version of the CommandAPI, or raise an issue on GitHub to bring back support for these versions</li>
+                </ul>
+                <b>GitHub Actions changes:</b>
+                <ul>
+                    <li>Fixed NodeJS 12 deprecation warnings</li>
+                    <li>Added markdownlint to verify that the documentation adheres to suitable Markdown standards</li>
+                    <li>Fixed building the CommandAPI example projects not failing if they failed to compile</li>
+                    <li>Added the CommandAPI documentation to GitHub Actions</li>
+                    <li>Added deployment of snapshot builds to GitHub Actions</li>
+            </td>
+        </tr>
         <tr>
             <td valign="top"><b>8.7.5</b></td>
             <td valign="top">February 2023</td>
